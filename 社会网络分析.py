@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 # __author__ = HaiShenMing
 # 2017/2/8 19:10
+import _hread
 
 import networkx as nx
 import csv

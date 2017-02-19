@@ -2,6 +2,7 @@ import time
 import csv
 import pandas
 import pickle
+import threading
 
 
 # import csv
@@ -105,8 +106,12 @@ def run(name):
     return time_frequency(time_serise, time_list)
 
 if __name__ == '__main__':
-    zhuanfa_time_frequency = run('zhuanfa.csv')
-    pinglun_time_frequency = run('pinglun.csv')
+    t_zhuanfa = threading.Thread(target=run, args=('zhuanfa.csv',))
+    t_pinglun = threading.Thread(target=run, args=('pinglun.csv',))
+    pinglun_time_frequency = t_pinglun.start()
+    zhuanfa_time_frequency = t_zhuanfa.start()
+    # zhuanfa_time_frequency = run('zhuanfa.csv')
+    # pinglun_time_frequency = run('pinglun.csv')
     with open('zhuanfa_frequency.pickle', 'wb') as f_zhuanfa, \
             open('pinglun_frequency.pickle', 'wb') as f_pinglun:
         pickle.dump(zhuanfa_time_frequency, f_zhuanfa)
@@ -132,5 +137,6 @@ if __name__ == '__main__':
             open('pinglun_percent.pickle','wb') as f_pinglun:
         pickle.dump(zhuanfa_time_frequency_percent,f_zhuanfa)
         pickle.dump(pinglun_time_frequency_percent,f_pinglun)
+
 
 
